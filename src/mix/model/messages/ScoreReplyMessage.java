@@ -1,11 +1,12 @@
-package model.messages;
+package mix.model.messages;
 
-import model.domain.Team;
+import mix.model.domain.Team;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class ScoreReplyMessage {
-    int clubnumber;
+    String clubnumber;
     int opponentclubnumber;
     int team;
     String score;
