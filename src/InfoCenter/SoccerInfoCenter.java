@@ -43,7 +43,7 @@ public class SoccerInfoCenter{
         clubReceiverAG.addTeamReplyListener(new TeamReplyListener() {
             @Override
             public void onTeamReply(ScoreAskingMessage scoreAskingMessage, TeamReplyMessage teamReplyMessage, String correlationId) {
-                ScoreReplyMessage scoreReplyMessage = new ScoreReplyMessage();
+                ScoreReplyMessage scoreReplyMessage = new ScoreReplyMessage(teamReplyMessage.getClubnumber(),teamReplyMessage.getMatchnumber(),teamReplyMessage.getScore());
                 clubClientAG.sendScoreReply(scoreReplyMessage,correlationId);
             }
         });
@@ -95,9 +95,9 @@ public class SoccerInfoCenter{
         System.out.println("League is set up and contains of the following clubs:" );
         for (Club c : soccerLeague.getClubs()){
             System.out.println("Name= " + c.getName() + " Clubnumber = "+ c.getClubnumber());
-            for(Team t : c.getTeams()){
-                System.out.println(t);
-            }
+//            for(Team t : c.getTeams()){
+//                System.out.println(t);
+//            }
         }
 
 

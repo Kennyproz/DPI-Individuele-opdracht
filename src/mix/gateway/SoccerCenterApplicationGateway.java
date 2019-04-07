@@ -88,7 +88,13 @@ public class SoccerCenterApplicationGateway {
         String teamReplyMessageString = teamSerializer.replyToString(teamReplyMessage);
         Message message = sender.createTextMessage(teamReplyMessageString,correlationId,"TeamReplyMessage",aggregationId);
         sender.send(message);
+    }
 
+    public void sendTeamReply(TeamReplyMessage teamReplyMessage, String correlationId){
+        int aggregationId = allAggregations.get(correlationId);
+        String teamReplyMessageString = teamSerializer.replyToString(teamReplyMessage);
+        Message message = sender.createTextMessage(teamReplyMessageString,correlationId,"TeamReplyMessage",aggregationId);
+        sender.send(message);
     }
 
     public void onInvalidScore(InvalidScoreMessage invalidScoreMessage, String correlationId,int aggregationId){

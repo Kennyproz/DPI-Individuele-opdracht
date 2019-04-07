@@ -52,7 +52,9 @@ public class ClubClientApplicationGateway {
                 onScoreAskingArrived(sam,message.getJMSCorrelationID());
             } else if(message.getStringProperty("messageType").equals("ScoreReplyMessage")){
                 ScoreReplyMessage srm = scoreSerializer.stringToReplyScore(((TextMessage)message).getText());
-                System.out.println("the score : " + srm.getScore());
+                System.out.println("You have received a score : " + srm.getScore());
+            } else{
+                System.out.println("idk what this is sorry lol");
             }
         } catch (JMSException e) {
             e.printStackTrace();

@@ -1,47 +1,40 @@
 package mix.model.messages;
 
+import mix.model.domain.Score;
 import mix.model.domain.Team;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class ScoreReplyMessage {
-    String clubnumber;
-    int opponentclubnumber;
-    int team;
-    String score;
+    int clubnumber;
+    int matchnumber;
+    Score score;
+
     Calendar minute;
     List<Team> LeagueTable;
 
-    public String getClubnumber() {
+    public int getClubnumber() {
         return clubnumber;
     }
 
-    public void setClubnumber(String clubnumber) {
+    public void setClubnumber(int clubnumber) {
         this.clubnumber = clubnumber;
     }
 
-    public int getOpponentclubnumber() {
-        return opponentclubnumber;
+    public int getMatchnumber() {
+        return matchnumber;
     }
 
-    public void setOpponentclubnumber(int opponentclubnumber) {
-        this.opponentclubnumber = opponentclubnumber;
+    public void setMatchnumber(int matchnumber) {
+        this.matchnumber = matchnumber;
     }
 
-    public int getTeam() {
-        return team;
-    }
-
-    public void setTeam(int team) {
-        this.team = team;
-    }
-
-    public String getScore() {
+    public Score getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(Score score) {
         this.score = score;
     }
 
@@ -62,5 +55,11 @@ public class ScoreReplyMessage {
     }
 
     public ScoreReplyMessage() {
+    }
+
+    public ScoreReplyMessage(int clubnumber, int matchnumber, Score score) {
+        this.clubnumber = clubnumber;
+        this.matchnumber = matchnumber;
+        this.score = score;
     }
 }

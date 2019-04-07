@@ -72,7 +72,7 @@ public class ClubReceiverApplicationGateway {
             if(trm.getScore().getTeamOne().getGoals() == trmo.getScore().getTeamOne().getGoals() && trm.getScore().getTeamTwo().getGoals() == trmo.getScore().getTeamTwo().getGoals()){
                 System.out.println("Scores are the same, continue");
                 for(TeamReplyListener teamReplyListener : teamReplyListeners){
-                    teamReplyListener.onTeamReply(scoreAskingMessage,teamReplyMessage,correlationId);
+                    teamReplyListener.onTeamReply(scoreAskingMessage,trm,correlationId);
                 }
             } else{
                 System.out.println("Scores are not the same, they have been sent back for confirmation..");

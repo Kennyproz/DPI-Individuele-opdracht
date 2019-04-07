@@ -131,7 +131,13 @@ public abstract class ClubReceiver {
         System.out.println("Which score is right?");
         System.out.println("1:" + invalidScoreMessage.getTeamReplyMessageOne().getScore());
         System.out.println("2:" + invalidScoreMessage.getTeamReplyMessageTwo().getScore());
-        getStringInput(scanner,"Typ the score number that is right (1 or 2) ","You have selected score ",false);
+        String answer = getStringInput(scanner,"Typ the score number that is right (1 or 2) ","You have selected score ",false);
+        if(Integer.parseInt(answer) == 1){
+            soccerCenterAG.sendTeamReply(invalidScoreMessage.getTeamReplyMessageOne(),correlationId);
+        } else if (Integer.parseInt(answer) == 2){
+            soccerCenterAG.sendTeamReply(invalidScoreMessage.getTeamReplyMessageTwo(),correlationId);
+        }
+
 
 
     }
