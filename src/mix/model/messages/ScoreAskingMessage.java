@@ -6,8 +6,7 @@ public class ScoreAskingMessage {
     int clubnumber;
     int team;
     int opponentclubnumber;
-    String score;
-    Calendar minute;
+
 
     public int getClubnumber() {
         return clubnumber;
@@ -33,21 +32,21 @@ public class ScoreAskingMessage {
         this.opponentclubnumber = opponentclubnumber;
     }
 
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public Calendar getMinute() {
-        return minute;
-    }
-
-    public void setMinute(Calendar minute) {
-        this.minute = minute;
-    }
+//    public String getScore() {
+//        return score;
+//    }
+//
+//    public void setScore(String score) {
+//        this.score = score;
+//    }
+//
+//    public Calendar getMinute() {
+//        return minute;
+//    }
+//
+//    public void setMinute(Calendar minute) {
+//        this.minute = minute;
+//    }
 
     public ScoreAskingMessage() {
 

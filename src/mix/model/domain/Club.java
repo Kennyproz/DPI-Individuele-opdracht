@@ -8,6 +8,20 @@ public class Club {
     String name;
     List<Team> teams;
 
+    public int getClubnumber() {
+        return clubnumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public Club() {
+    }
 
     public Club(int clubnumber, String name) {
         this.clubnumber = clubnumber;
@@ -24,7 +38,7 @@ public class Club {
     private void createTeams(){
         List<Team> teams = new ArrayList<>();
         for(int i = 0; i < 4; i++){
-            Team team = new Team(this,"Team" + i);
+            Team team = new Team(this.getClubnumber(), Integer.toString(i));
             teams.add(team);
         }
         this.teams = teams;

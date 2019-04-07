@@ -1,34 +1,58 @@
 package client;
 
-import javax.jms.Message;
-import javax.jms.MessageListener;
 import java.io.IOException;
-import java.util.Calendar;
+import java.util.Scanner;
 
+import mix.gateway.SoccerCenterApplicationGateway;
 import mix.model.messages.ScoreAskingMessage;
-import receiver.ReceiverSender;
 
 
-public class ClubClient implements MessageListener {
-    public static void main(String[] args) throws IOException {
-        System.out.println("Welcome, Select as which club you'd like to send a message:");
+public class ClubClient {
 
-        System.out.println("Press something to ask a score");
+    private SoccerCenterApplicationGateway soccerCenterAG;
 
-        System.in.read();
-        ScoreAskingMessage sam = new ScoreAskingMessage(1,1);
-        Calendar calendar = Calendar.getInstance();
-        String correlationId = (Integer.toString(sam.getClubnumber())+calendar.getTimeInMillis());
 
-        ReceiverSender rs = new ReceiverSender(false,"SoccerInfoCenterEntrance");
-        rs.SendMessage(sam,"ScoreAskingMessage",null,correlationId);
-        System.out.println("Message had been sended");
-        System.in.read();
-
+    public ClubClient() {
+        soccerCenterAG = new SoccerCenterApplicationGateway("ClientToCenter","CenterToClient");
     }
 
-    @Override
-    public void onMessage(Message message) {
+    public static void main(String[] args) throws IOException {
+        System.out.println("Welcome, Select as which club you'd like to send a message:");
+        ClubClient clubClient = new ClubClient();
 
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
+
+        while (!exit){
+            System.out.println("Typ the clubnumber you want to send a message as (1-5) (type exit to quit)");
+            String input = scanner.nextLine();
+            if(input != null){
+                if("exit".equals(input)){
+                    exit = true;
+                    System.out.println("Exit");
+                }
+                if(tryParseInt(input)){
+                    if(Integer.parseInt(input) >= 1 && Integer.parseInt(input) <= 5){
+                        ScoreAskingMessage sam = new ScoreAskingMessage(Integer.parseInt(input),1);
+                        clubClient.soccerCenterAG.askForScore(sam);
+                        System.out.println("Message had been sended with clubnumber " + input);
+                    } else{
+                        System.out.println("Number not right");
+                    }
+                }
+
+            }
+        }
+        scanner.close();
+    }
+
+
+    public static boolean tryParseInt(String value){
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
