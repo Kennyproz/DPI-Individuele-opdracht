@@ -116,7 +116,6 @@ public class SoccerCenterApplicationGateway {
                 ScoreReplyMessage scoreReplyMessage = scoreSerializer.stringToReplyScore(((TextMessage)message).getText());
                 onScoreReplyArrived(scoreReplyMessage,message.getJMSCorrelationID());
             } else if(message.getStringProperty("messageType").equals("InvalidScoreMessage")){
-                System.out.println("Reached n stuff..");
                 InvalidScoreMessage invalidScoreMessage = teamSerializer.stringToInvalidMessage(((TextMessage)message).getText());
                 System.out.println(invalidScoreMessage);
                 onInvalidScore(invalidScoreMessage,message.getJMSCorrelationID(),message.getIntProperty("aggregationId"));

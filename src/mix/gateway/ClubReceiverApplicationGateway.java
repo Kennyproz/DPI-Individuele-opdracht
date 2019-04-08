@@ -30,6 +30,7 @@ public class ClubReceiverApplicationGateway {
 
     private List<TeamReplyListener> teamReplyListeners;
     private List<Aggregator> aggregators;
+    private List<Aggregator> invalidAggregators;
 
     public static int getMatchNumber() {
         return matchNumber;
@@ -101,6 +102,10 @@ public class ClubReceiverApplicationGateway {
 
         setTotalMessages(destinations,message,correlationId);
     }
+
+//    public void sendInvalidReplyAnswer(TeamReplyMessage teamReplyMessage, String correlationId, int aggregationId){
+//        Message message = messageMaker.createTextMessage(teamSerializer.replyToString(teamReplyMessage),correlationId,"TeamReplyMessage",aggregationId);
+//    }
 
     private void setTotalMessages(List<String> destinations, Message message, String correlationId){
         int totalMessages = destinations.size();

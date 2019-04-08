@@ -32,7 +32,6 @@ public abstract class ClubReceiver {
     public static void main(String[] args) throws IOException {
         System.out.println("ReceiverClub has been started");
         Scanner scanner = new Scanner(System.in);
-        boolean exit = false;
         ClubReceiver rs;
         String clubname = getStringInput(scanner,"Select your clubname ","You have selected club ",true);
         String teamnumber = getStringInput(scanner,"Select your team ","You have selected team ", false);
@@ -84,7 +83,7 @@ public abstract class ClubReceiver {
                         System.out.println("Exit");
                     }
                     if(tryParseInt(input)){
-                        System.out.println("You have selected team " +  input);
+                        System.out.println(answer +  input);
                         s = input;
                     }
                 }
