@@ -1,6 +1,7 @@
 package mix.gateway;
 
 import mix.eventlisteners.ScoreAskingListener;
+import mix.eventlisteners.ScoreReplyListener;
 import mix.model.messages.ScoreAskingMessage;
 import mix.model.messages.ScoreReplyMessage;
 import mix.model.serializers.ScoreSerializer;
@@ -21,13 +22,14 @@ public class ClubClientApplicationGateway {
     private MessageReceiverGateway receiver;
 
     private List<ScoreAskingListener> scoreAskingListeners;
+    private List<ScoreReplyListener> scoreReplyListeners;
 
     public ClubClientApplicationGateway(String sender, String receiver) {
         this.sender = new MessageSenderGateway(sender);
         this.receiver = new MessageReceiverGateway(receiver);
         this.scoreSerializer = new ScoreSerializer();
         this.scoreAskingListeners = new ArrayList<>();
-
+        this.scoreReplyListeners = new ArrayList<>();
 
         this.receiver.setListener(new MessageListener(){
             @Override

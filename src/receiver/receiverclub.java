@@ -7,11 +7,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class ReceiverClub extends ClubReceiver{
-
-
-
     public ReceiverClub(String clubname, int clubnumber) {
-        super(clubname,clubnumber);
-    }
-
+            super(clubname,clubnumber);
+        }
 }
+
+

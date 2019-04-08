@@ -31,6 +31,6 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Score{" + teamOne.getName() + teamOne.getGoals() + " - "  + teamTwo.getGoals() + teamTwo.getName() + '}';
+        return "Score{" + teamOne.getClubname() + " " + teamOne.getGoals() + " - "  + teamTwo.getGoals() + " " +teamTwo.getClubname() + '}';
     }
 }

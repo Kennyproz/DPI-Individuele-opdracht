@@ -3,8 +3,10 @@ package client;
 import java.io.IOException;
 import java.util.Scanner;
 
+import mix.eventlisteners.ScoreReplyListener;
 import mix.gateway.SoccerCenterApplicationGateway;
 import mix.model.messages.ScoreAskingMessage;
+import mix.model.messages.ScoreReplyMessage;
 
 
 public class ClubClient {
@@ -14,6 +16,12 @@ public class ClubClient {
 
     public ClubClient() {
         soccerCenterAG = new SoccerCenterApplicationGateway("ClientToCenter","CenterToClient");
+        soccerCenterAG.addScoreReplyListener(new ScoreReplyListener() {
+            @Override
+            public void onScoreReply(ScoreAskingMessage scoreAskingMessage, ScoreReplyMessage scoreReplyMessage) {
+                System.out.println("Score received: " + scoreReplyMessage.getScore());
+            }
+        });
     }
 
     public static void main(String[] args) throws IOException {
@@ -44,6 +52,7 @@ public class ClubClient {
             }
         }
         scanner.close();
+
     }
 
 

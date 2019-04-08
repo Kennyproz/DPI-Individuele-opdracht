@@ -38,7 +38,7 @@ public class Club {
     private void createTeams(){
         List<Team> teams = new ArrayList<>();
         for(int i = 0; i < 4; i++){
-            Team team = new Team(this.getClubnumber(), Integer.toString(i));
+            Team team = new Team(this.getClubnumber(), Integer.toString(i),this.getName());
             teams.add(team);
         }
         this.teams = teams;

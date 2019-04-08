@@ -3,6 +3,7 @@ package mix.model.domain;
 public class Team {
 
     int clubnumber;
+    String clubname;
     String name;
     int goals;
 
@@ -31,17 +32,27 @@ public class Team {
     }
 
 
+    public String getClubname() {
+        return clubname;
+    }
+
+    public void setClubname(String clubname) {
+        this.clubname = clubname;
+    }
+
     public Team() {
     }
 
-    public Team(int clubnumber, String name) {
+    public Team(int clubnumber, String name, String clubname) {
         //this.goals = 0;
         this.clubnumber = clubnumber;
+        this.clubname = clubname;
         this.name = name;
     }
 
-    public Team(int clubnumber, int goals, String name) {
+    public Team(int clubnumber, int goals, String name, String clubname) {
         this.clubnumber = clubnumber;
+        this.clubname = clubname;
         this.goals = goals;
         this.name = name;
     }
@@ -50,6 +61,7 @@ public class Team {
     public String toString() {
         return "Team{" +
                 "clubnumber=" + clubnumber +
+                ", clubname= " + clubname +
                 ", name='" + name + '\'' +
                 ", goals=" + goals +
                 '}';
