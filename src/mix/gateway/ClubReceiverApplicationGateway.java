@@ -80,7 +80,7 @@ public class ClubReceiverApplicationGateway {
                 InvalidScoreMessage invalidScoreMessage = new InvalidScoreMessage();
                 invalidScoreMessage.setTeamReplyMessageOne(trm);
                 invalidScoreMessage.setTeamReplyMessageTwo(trmo);
-                sendInvalidScore(invalidScoreMessage,correlationId,aggregationId,allDestinations.get(correlationId));
+                sendInvalidScore(invalidScoreMessage,correlationId,aggregationId+1,allDestinations.get(correlationId));
             }
         }
     }
