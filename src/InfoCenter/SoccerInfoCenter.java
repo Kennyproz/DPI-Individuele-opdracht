@@ -1,10 +1,13 @@
 package InfoCenter;
 
+import client.ClubClient;
 import mix.database.LeagueSetup;
+import mix.database.SoccerDatabase;
 import mix.eventlisteners.ScoreAskingListener;
 import mix.eventlisteners.TeamReplyListener;
 import mix.gateway.ClubClientApplicationGateway;
 import mix.gateway.ClubReceiverApplicationGateway;
+import mix.gateway.DatabaseApplicationGateway;
 import mix.model.domain.Club;
 import mix.model.domain.League;
 import mix.model.domain.Team;
@@ -17,16 +20,13 @@ import java.util.List;
 
 public class SoccerInfoCenter{
 
-    private HashMap<String, AskingReply> hashMap;
     private ClubClientApplicationGateway clubClientAG;
     private ClubReceiverApplicationGateway clubReceiverAG;
     private League soccerLeague;
 
 
     public SoccerInfoCenter() {
-        hashMap = new HashMap<>();
         setupLeague();
-
 
         clubClientAG = new ClubClientApplicationGateway("CenterToClient","ClientToCenter");
         clubReceiverAG = new ClubReceiverApplicationGateway("RivalToCenter");
@@ -34,9 +34,9 @@ public class SoccerInfoCenter{
             @Override
             public void onScoreAsking(ScoreAskingMessage scoreAskingMessage, String correlationId) {
                 List<Club> rivals =  getRivalClubs(scoreAskingMessage);
-                System.out.println(rivals.get(0).getTeams().get(0));
-                System.out.println(rivals.get(1).getTeams().get(1));
+                //TODO add to db
                 TeamAskingMessage teamAskingMessage = new TeamAskingMessage(scoreAskingMessage.getClubnumber(),clubReceiverAG.getMatchNumber(),rivals.get(0),rivals.get(1));
+//                ClubClient.DB.getTeamAskingMessages().add(teamAskingMessage);
                 clubReceiverAG.sendTeamAsking(scoreAskingMessage,teamAskingMessage,correlationId,getRivals(scoreAskingMessage));
             }
         });
@@ -44,6 +44,8 @@ public class SoccerInfoCenter{
             @Override
             public void onTeamReply(ScoreAskingMessage scoreAskingMessage, TeamReplyMessage teamReplyMessage, String correlationId) {
                 ScoreReplyMessage scoreReplyMessage = new ScoreReplyMessage(teamReplyMessage.getClubnumber(),teamReplyMessage.getMatchnumber(),teamReplyMessage.getScore());
+                //TODO add to db
+//                ClubClient.DB.getScoreReplyMessages().add(scoreReplyMessage);
                 clubClientAG.sendScoreReply(scoreReplyMessage,correlationId);
             }
         });
@@ -58,6 +60,7 @@ public class SoccerInfoCenter{
 
 
 
+
         System.in.read();
     }
 
@@ -67,7 +70,7 @@ public class SoccerInfoCenter{
         int i = 0;
         for(Club c : soccerLeague.getClubs()){
             if(c.getClubnumber()!= current.getClubnumber() && i < 2){
-                System.out.println("Rival found: " + c.getName() + "1");
+                System.out.println("Message had been send to rival: " + c.getName() + "1");
                 rivals.add(c.getName() + "1");
                 i++;
             }

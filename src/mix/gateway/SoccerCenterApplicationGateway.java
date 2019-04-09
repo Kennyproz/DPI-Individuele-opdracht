@@ -24,6 +24,7 @@ public class SoccerCenterApplicationGateway {
     private ScoreSerializer scoreSerializer;
     private TeamSerializer teamSerializer;
     private MessageSenderGateway sender;
+    private MessageSenderGateway senderToDB;
     private MessageReceiverGateway receiver;
 
     private List<TeamAskingListener> teamAskingListeners;
@@ -39,6 +40,7 @@ public class SoccerCenterApplicationGateway {
         this.scoreSerializer = new ScoreSerializer();
         this.teamSerializer = new TeamSerializer();
         this.sender = new MessageSenderGateway(sender);
+        this.senderToDB = new MessageSenderGateway("DatabaseChannel");
         this.receiver = new MessageReceiverGateway(receiver);
 
         this.teamAskingListeners = new ArrayList<>();
@@ -64,6 +66,7 @@ public class SoccerCenterApplicationGateway {
         String correlationId = (Integer.toString(scoreAskingMessage.getClubnumber()) + calendar.getTimeInMillis());
 
         Message message = sender.createTextMessage(askingString,correlationId,"ScoreAskingMessage",0);
+        senderToDB.send(message);
         sender.send(message);
     }
 
@@ -87,6 +90,12 @@ public class SoccerCenterApplicationGateway {
         int aggregationId = allAggregations.get(correlationId);
         String teamReplyMessageString = teamSerializer.replyToString(teamReplyMessage);
         Message message = sender.createTextMessage(teamReplyMessageString,correlationId,"TeamReplyMessage",aggregationId);
+        senderToDB.send(message);
+        try {
+            sender.getProducer().setTimeToLive(15000);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
         sender.send(message);
     }
 
@@ -94,6 +103,12 @@ public class SoccerCenterApplicationGateway {
         int aggregationId = allAggregations.get(correlationId);
         String teamReplyMessageString = teamSerializer.replyToString(teamReplyMessage);
         Message message = sender.createTextMessage(teamReplyMessageString,correlationId,"TeamReplyMessage",aggregationId);
+        senderToDB.send(message);
+        try {
+            sender.getProducer().setTimeToLive(15000);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
         sender.send(message);
     }
 
@@ -107,7 +122,7 @@ public class SoccerCenterApplicationGateway {
     }
 
     private void receivedMessage(Message message){
-        System.out.println("Received message on SoccerCenterApplicationGateway: " + message);
+//        System.out.println("Received message on SoccerCenterApplicationGateway: " + message);
         try{
             if(message.getStringProperty("messageType").equals("TeamAskingMessage")){
                 TeamAskingMessage sam = teamSerializer.stringToAskingTeam(((TextMessage)message).getText());

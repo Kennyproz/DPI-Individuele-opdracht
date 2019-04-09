@@ -19,6 +19,7 @@ public class ClubClientApplicationGateway {
 
     private ScoreSerializer scoreSerializer;
     private MessageSenderGateway sender;
+    private MessageSenderGateway senderToDB;
     private MessageReceiverGateway receiver;
 
     private List<ScoreAskingListener> scoreAskingListeners;
@@ -26,6 +27,7 @@ public class ClubClientApplicationGateway {
 
     public ClubClientApplicationGateway(String sender, String receiver) {
         this.sender = new MessageSenderGateway(sender);
+        this.senderToDB = new MessageSenderGateway("DatabaseChannel");
         this.receiver = new MessageReceiverGateway(receiver);
         this.scoreSerializer = new ScoreSerializer();
         this.scoreAskingListeners = new ArrayList<>();
@@ -46,8 +48,7 @@ public class ClubClientApplicationGateway {
     }
 
     private void receivedMessage(Message message){
-        System.out.println("Received message on ClubClientApplicationGateway: " + message);
-
+//        System.out.println("Received message on ClubClientApplicationGateway: " + message);
         try{
             if(message.getStringProperty("messageType").equals("ScoreAskingMessage")){
                 ScoreAskingMessage sam = scoreSerializer.stringToAskingScore(((TextMessage)message).getText());
@@ -71,6 +72,7 @@ public class ClubClientApplicationGateway {
     public void sendScoreReply(ScoreReplyMessage scoreReplyMessage, String correlationId) {
         String scoreReplyString = scoreSerializer.replyToString(scoreReplyMessage);
         Message message = sender.createTextMessage(scoreReplyString,correlationId,"ScoreReplyMessage",0);
+        senderToDB.send(message);
         sender.send(message);
     }
 }

@@ -1,10 +1,12 @@
 package receiver;
 
+import client.ClubClient;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import mix.eventlisteners.ScoreNotEqualListener;
 import mix.eventlisteners.TeamAskingListener;
 import mix.eventlisteners.TeamReplyListener;
 import mix.gateway.SoccerCenterApplicationGateway;
+import mix.model.domain.Club;
 import mix.model.domain.Score;
 import mix.model.domain.Team;
 import mix.model.messages.InvalidScoreMessage;
@@ -120,6 +122,8 @@ public abstract class ClubReceiver {
         TeamReplyMessage teamReplyMessage = new TeamReplyMessage(message.getClubnumber(),score,message.getMatchnumber());
 
         System.out.println("The score that you have entered is: " + message.getReceiver().getName() + " " + ownGoals + " - " + opponentGoals + " " + message.getOpponentReceiver().getName());
+        //TODO add to db
+//        ClubClient.DB.getTeamReplyMessages().add(teamReplyMessage);
         soccerCenterAG.sendTeamReply(teamReplyMessage,message);
         System.out.println("Message succesfully send back to SoccerInfoCenter");
     }
@@ -131,6 +135,8 @@ public abstract class ClubReceiver {
         System.out.println("1:" + invalidScoreMessage.getTeamReplyMessageOne().getScore());
         System.out.println("2:" + invalidScoreMessage.getTeamReplyMessageTwo().getScore());
         String answer = getStringInput(scanner,"Typ the score number that is right (1 or 2) ","You have selected score ",false);
+        //TODO add to db
+//        ClubClient.DB.getInvalidScoreMessages().add(invalidScoreMessage);
         if(Integer.parseInt(answer) == 1){
             soccerCenterAG.sendTeamReply(invalidScoreMessage.getTeamReplyMessageOne(),correlationId);
         } else if (Integer.parseInt(answer) == 2){

@@ -7,9 +7,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" exported="" name="activemq-all-5.15.8" level="project" />
+    <orderEntry type="library" exported="" name="com.fasterxml.jackson.core:jackson-core:2.9.8" level="project" />
+    <orderEntry type="library" exported="" name="com.fasterxml.jackson.core:jackson-databind:2.9.8" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-core:2.7.9" level="project" />
     <orderEntry type="library" name="activemq-all-5.15.8" level="project" />
-    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-core:2.9.8" level="project" />
-    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.9.8" level="project" />
   </component>
 </module>

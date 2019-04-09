@@ -11,6 +11,10 @@ public class MessageSenderGateway extends MessageGateway{
 
     private MessageProducer producer;
 
+    public MessageProducer getProducer() {
+        return producer;
+    }
+
     public MessageSenderGateway(String channelName) {
         setup(channelName);
     }

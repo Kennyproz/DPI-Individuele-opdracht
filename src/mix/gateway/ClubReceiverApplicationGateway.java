@@ -1,5 +1,6 @@
 package mix.gateway;
 
+import client.ClubClient;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import mix.eventlisteners.ScoreAskingListener;
 import mix.eventlisteners.TeamReplyListener;
@@ -23,6 +24,7 @@ public class ClubReceiverApplicationGateway {
     private static int matchNumber = 1;
     private TeamSerializer teamSerializer;
     private MessageSenderGateway messageMaker;
+    private MessageSenderGateway senderToDB;
     private MessageReceiverGateway receiver;
 
     private HashMap<String,ScoreAskingMessage> allScoreAsking;
@@ -30,7 +32,6 @@ public class ClubReceiverApplicationGateway {
 
     private List<TeamReplyListener> teamReplyListeners;
     private List<Aggregator> aggregators;
-    private List<Aggregator> invalidAggregators;
 
     public static int getMatchNumber() {
         return matchNumber;
@@ -38,6 +39,7 @@ public class ClubReceiverApplicationGateway {
 
     public ClubReceiverApplicationGateway(String receiver) {
         this.teamSerializer = new TeamSerializer();
+        this.senderToDB = new MessageSenderGateway("DatabaseChannel");
         this.receiver = new MessageReceiverGateway(receiver);
         this.messageMaker = new MessageSenderGateway("none");
 
@@ -103,14 +105,16 @@ public class ClubReceiverApplicationGateway {
         setTotalMessages(destinations,message,correlationId);
     }
 
-//    public void sendInvalidReplyAnswer(TeamReplyMessage teamReplyMessage, String correlationId, int aggregationId){
-//        Message message = messageMaker.createTextMessage(teamSerializer.replyToString(teamReplyMessage),correlationId,"TeamReplyMessage",aggregationId);
-//    }
-
-    private void setTotalMessages(List<String> destinations, Message message, String correlationId){
+    private void setTotalMessages(List<String> destinations, Message message, String correlationId)  {
         int totalMessages = destinations.size();
         for(String destination : destinations){
             MessageSenderGateway messageSenderGateway = new MessageSenderGateway(destination);
+            senderToDB.send(message);
+            try {
+                messageSenderGateway.getProducer().setTimeToLive(15000);
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
             messageSenderGateway.send(message);
         }
 
@@ -122,9 +126,8 @@ public class ClubReceiverApplicationGateway {
     }
 
 
-
     private void receivedMessage(Message message){
-        System.out.println("Received message on ClubRivalApplicationGateway: " + message);
+//        System.out.println("Received message on ClubRivalApplicationGateway: " + message);
         try{
             if(message.getStringProperty("messageType").equals("TeamReplyMessage")){
                 TeamReplyMessage teamReplyMessage = teamSerializer.stringToReplyTeam(((TextMessage)message).getText());
