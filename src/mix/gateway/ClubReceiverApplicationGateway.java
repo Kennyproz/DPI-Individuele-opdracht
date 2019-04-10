@@ -111,7 +111,7 @@ public class ClubReceiverApplicationGateway {
             MessageSenderGateway messageSenderGateway = new MessageSenderGateway(destination);
             senderToDB.send(message);
             try {
-                messageSenderGateway.getProducer().setTimeToLive(15000);
+                messageSenderGateway.getProducer().setTimeToLive(30000);
             } catch (JMSException e) {
                 e.printStackTrace();
             }

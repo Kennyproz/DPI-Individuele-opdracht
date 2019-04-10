@@ -1,18 +1,14 @@
 package receiver;
 
-import client.ClubClient;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import mix.eventlisteners.ScoreNotEqualListener;
 import mix.eventlisteners.TeamAskingListener;
-import mix.eventlisteners.TeamReplyListener;
 import mix.gateway.SoccerCenterApplicationGateway;
-import mix.model.domain.Club;
 import mix.model.domain.Score;
 import mix.model.domain.Team;
 import mix.model.messages.InvalidScoreMessage;
 import mix.model.messages.TeamAskingMessage;
 import mix.model.messages.TeamReplyMessage;
-import sun.plugin2.message.Message;
 
 import java.io.IOException;
 import java.util.Scanner;

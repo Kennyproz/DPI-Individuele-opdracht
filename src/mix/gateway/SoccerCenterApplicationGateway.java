@@ -92,7 +92,7 @@ public class SoccerCenterApplicationGateway {
         Message message = sender.createTextMessage(teamReplyMessageString,correlationId,"TeamReplyMessage",aggregationId);
         senderToDB.send(message);
         try {
-            sender.getProducer().setTimeToLive(15000);
+            sender.getProducer().setTimeToLive(30000);
         } catch (JMSException e) {
             e.printStackTrace();
         }
@@ -105,7 +105,7 @@ public class SoccerCenterApplicationGateway {
         Message message = sender.createTextMessage(teamReplyMessageString,correlationId,"TeamReplyMessage",aggregationId);
         senderToDB.send(message);
         try {
-            sender.getProducer().setTimeToLive(15000);
+            sender.getProducer().setTimeToLive(30000);
         } catch (JMSException e) {
             e.printStackTrace();
         }
